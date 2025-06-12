@@ -48,6 +48,7 @@ use {
 require("referencer").setup({
     enable = true, -- enable on startup
     format = "  %d reference(s)", -- format string for reference count
+    show_no_reference = true, -- show if refs count = 0
     kinds = { 12, 6, 5, 23, 8 }, -- LSP SymbolKinds to show references for
     hl_group = "Comment", -- default highlight group
     color = "#FFA500", -- optional custom color (overrides hl_group)
@@ -74,8 +75,8 @@ Full list: [LSP Specification - SymbolKind](https://microsoft.github.io/language
 
 | Command             | Description                         |
 | ------------------- | ----------------------------------- |
-| `:ReferencerToggle` | Toggle reference display on/off     |
-| `:ReferencerUpdate` | Force refresh reference information |
+| `:ReferencerToggle` | Toggle reference display on/off         |
+| `:ReferencerUpdate` | Force refresh reference information in current buffer  |
 
 ---
 
@@ -84,3 +85,4 @@ Full list: [LSP Specification - SymbolKind](https://microsoft.github.io/language
 - ⚡ The plugin is **asynchronous**, so it won’t block your UI while fetching references.
 - ✅ Compatible with most major LSPs (gopls, tsserver, etc.).
 - ⚠ Only the first attached LSP client is used for requests.
+

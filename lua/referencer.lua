@@ -41,13 +41,19 @@ function M.show_all()
                     local params = {
                         textDocument = vim.lsp.util.make_text_document_params(),
                         position = pos,
-                        context = { includeDeclaration = config.options.include_declaration },
+                        context = { includeDeclaration = true },
                     }
 
                     client.request("textDocument/references", params, function(_, refs)
                         if not refs or #refs == 0 then return end
                         vim.schedule(function()
-                            local msg = string.format(config.options.format, #refs - 1)
+                            local refsCount = #refs - 1
+                            local msg = string.format(config.options.format, refsCount)
+
+                            if not config.options.show_no_reference and refsCount == 0 then
+                                return
+                            end
+
                             append_virtual_text(bufnr, line, msg)
                         end)
                     end, bufnr)

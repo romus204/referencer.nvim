@@ -3,12 +3,12 @@ local M = {}
 M.options = {
     enable = false,
     format = "  %d reference(s)",
-    include_declaration = true, -- ??
+    show_no_reference = true,
     kinds = { 12, 6, 5, 23, 8 },
-    hl_group = "Comment",       --color with hl_group
-    color = nil,                -- custom color
-    virt_text_pos = "eol",      -- vitrual text position
-    pattern = nil,              -- files for enable with LspAttach autocommand
+    hl_group = "Comment",  --color with hl_group
+    color = nil,           -- custom color
+    virt_text_pos = "eol", -- vitrual text position
+    pattern = nil,         -- files for enable with LspAttach autocommand
 }
 
 local hl_group_from_color = nil
