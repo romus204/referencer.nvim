@@ -49,18 +49,34 @@ use {
 
 ---
 
-## Configuration
+## Default configuration
 
 ```lua
 require("referencer").setup({
-    enable = true, -- enable on startup
+    enable = false,                -- enable after LSP attach
     format = "  %d reference(s)", -- format string for reference count
-    show_no_reference = true, -- show if refs count = 0
-    kinds = { 12, 6, 5, 23, 8 }, -- LSP SymbolKinds to show references for
-    hl_group = "Comment", -- default highlight group
-    color = "#FFA500", -- optional custom color (overrides hl_group)
-    virt_text_pos = "eol", -- virtual text position (eol | overlay | right_align)
-    pattern = "*.go", -- pattern for LspAttach autocmd to auto-enable
+    show_no_reference = true,      -- show if refs count = 0
+    kinds = { 12, 6, 5, 23, 8 },   -- LSP SymbolKinds to show references for
+    hl_group = "Comment",          -- default highlight group
+    color = nil,                   -- optional custom color (overrides hl_group)
+    virt_text_pos = "eol",         -- virtual text position (eol | overlay | right_align)
+    pattern = nil,                 -- pattern for LspAttach autocmd to auto-enable
+
+})
+```
+
+## Configuration example
+
+```lua
+require("referencer").setup({
+    enable = true, 
+    format = "  %d ref", 
+    show_no_reference = true, 
+    kinds = { 12, 6, 5, 23, 8 }, 
+    hl_group = "Comment", 
+    color = "#FFA500", 
+    virt_text_pos = "eol",
+    pattern = "*.go", 
 })
 ```
 
