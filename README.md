@@ -5,6 +5,13 @@
 This is especially useful for quickly understanding code usage without manually invoking LSP commands.
 
 ---
+## Preview
+
+https://github.com/user-attachments/assets/1b6351c8-407b-4ed4-846e-dc6cef817219
+
+
+
+---
 
 ## Features
 
