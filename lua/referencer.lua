@@ -1,20 +1,11 @@
 local M = {}
 local ns = vim.api.nvim_create_namespace("Referencer")
-local config = require("referencer.config")
+local config = require("config")
+
+M.enable = false
 
 local function append_virtual_text(bufnr, line, text_to_add)
-    local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, -1, { line, 0 }, { line, -1 }, { details = true })
-
     local virt_texts = {}
-
-    for _, ext in ipairs(extmarks) do
-        local details = ext[4]
-        if details and details.virt_text and details.virt_text_pos == "eol" then
-            for _, chunk in ipairs(details.virt_text) do
-                table.insert(virt_texts, chunk)
-            end
-        end
-    end
 
     table.insert(virt_texts, { text_to_add, config.get_hl_group() })
 
@@ -31,11 +22,10 @@ local function append_virtual_text(bufnr, line, text_to_add)
 end
 
 function M.show_all()
+    M.enable = true
     local bufnr = vim.api.nvim_get_current_buf()
     local client = vim.lsp.get_active_clients({ bufnr = bufnr })[1]
     if not client then return end
-
-    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
 
     vim.lsp.buf_request(bufnr, "textDocument/documentSymbol", {
         textDocument = vim.lsp.util.make_text_document_params(),
@@ -72,9 +62,32 @@ function M.show_all()
     end)
 end
 
+function M.delete_all()
+    M.enable = false
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+end
+
+function M.toggle()
+    if M.enable then
+        M.delete_all()
+    else
+        M.show_all()
+    end
+end
+
+function M.update()
+    if M.enable then
+        M.delete_all()
+        M.show_all()
+    end
+end
+
 function M.setup(user_opts)
     config.setup(user_opts)
-    vim.api.nvim_create_user_command("ReferencerShow", M.show_all, {})
+
+    vim.api.nvim_create_user_command("ReferencerToggle", M.toggle, {})
+    vim.api.nvim_create_user_command("ReferencerUpdate", M.update, {})
 end
 
 return M
