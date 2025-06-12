@@ -1,0 +1,115 @@
+*referencer.txt*  Plugin Documentation for referencer.nvim
+
+==============================================================================
+NAME                                             *referencer.nvim*
+
+referencer.nvim - Asynchronous LSP-based reference count display using virtual text
+
+==============================================================================
+DESCRIPTION                                      *referencer-description*
+
+`referencer.nvim` is a lightweight, asynchronous Neovim plugin written in Lua.
+It displays the number of references to functions, methods, types, and other
+symbols directly in the buffer using virtual text, powered by the built-in LSP.
+
+It helps you quickly understand code usage without needing to manually trigger
+LSP reference commands.
+
+==============================================================================
+INSTALLATION                                     *referencer-install*
+
+With lazy.nvim:
+
+>lua
+{
+    "your-username/referencer.nvim",
+    config = function()
+        require("referencer").setup()
+    end
+}
+
+With packer.nvim:
+
+>lua
+use {
+    "your-username/referencer.nvim",
+    config = function()
+        require("referencer").setup()
+    end
+}
+
+==============================================================================
+CONFIGURATION                                    *referencer-configuration*
+
+Setup example:
+
+>lua
+require("referencer").setup({
+    enable = true,
+    format = "  %d reference(s)",
+    show_no_reference = true,
+    kinds = { 12, 6, 5, 23, 8 },
+    hl_group = "Comment",
+    color = "#FFA500",
+    virt_text_pos = "eol",
+    pattern = "*.go",
+})
+
+OPTIONS:
+
+• `enable`              - Automatically enable on LspAttach
+• `format`              - Format string with `%d` for count (e.g. "  %d reference(s)")
+• `show_no_reference`   - Show entries even if references = 0
+• `kinds`               - Array of LSP SymbolKinds to include (see below)
+• `hl_group`            - Highlight group for virtual text (e.g. "Comment")
+• `color`               - Optional hex color (overrides `hl_group`)
+• `virt_text_pos`       - Position: `"eol"`, `"overlay"`, `"right_align"`
+• `pattern`             - File pattern for auto-enable on `LspAttach`
+
+Common SymbolKind values:
+
+    5   Method
+    6   Function
+    8   Struct
+    12  Variable
+    23  Interface
+
+Full list: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#symbolkind
+
+==============================================================================
+COMMANDS                                          *referencer-commands*
+
+`:ReferencerToggle`      Toggle reference display on/off
+`:ReferencerUpdate`      Refresh the virtual text counts manually
+
+==============================================================================
+NOTES                                             *referencer-notes*
+
+- The plugin is asynchronous and non-blocking.
+- Compatible with LSP servers like `gopls`, `tsserver`, `pyright`, etc.
+- Uses the first LSP client attached to the buffer.
+- It uses `textDocument/documentSymbol` and `textDocument/references` LSP methods.
+- Can be controlled manually or triggered via `LspAttach`.
+
+==============================================================================
+EXAMPLE                                           *referencer-example*
+
+Sample configuration:
+
+>lua
+require("referencer").setup({
+    color = "#00ff00",
+    kinds = { 5, 6 },
+    format = "  %d uses",
+})
+
+==============================================================================
+
+LICENSE                                           *referencer-license*
+
+MIT License
+
+==============================================================================
+AUTHOR                                            *referencer-author*
+
+Created by Roman Chesnakov romus204@gmail.com
