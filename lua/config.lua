@@ -4,11 +4,11 @@ M.options = {
     enable = false,
     format = "  %d reference(s)",
     show_no_reference = true,
-    kinds = { 12, 6, 5, 23, 8 },
-    hl_group = "Comment",  --color with hl_group
-    color = nil,           -- custom color
-    virt_text_pos = "eol", -- vitrual text position
-    pattern = nil,         -- files for enable with LspAttach autocommand
+    kinds = { 5, 6, 8, 12, 13, 14, 23, },
+    hl_group = "Comment",
+    color = nil,
+    virt_text_pos = "eol",
+    pattern = nil,
 }
 
 local hl_group_from_color = nil
