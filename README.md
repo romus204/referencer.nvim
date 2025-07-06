@@ -61,6 +61,7 @@ require("referencer").setup({
     color = nil,                         -- optional custom color (overrides hl_group)
     virt_text_pos = "eol",               -- virtual text position (eol | overlay | right_align)
     pattern = nil,                       -- pattern for LspAttach autocmd to auto-enable
+    lsp_servers = {}                     -- list of servers for which this plugin will be active. nil or {} is ALL LSP clients
 
 })
 ```
@@ -76,7 +77,9 @@ require("referencer").setup({
     hl_group = "Comment", 
     color = "#FFA500", 
     virt_text_pos = "eol",
-    pattern = "*.go", 
+    pattern = {"*.go", "*.py"}, 
+    lsp_servers = {'gopls', 'pyright'}
+
 })
 ```
 
@@ -122,12 +125,3 @@ Full list: [LSP Specification - SymbolKind](https://microsoft.github.io/language
 | ------------------- | ----------------------------------- |
 | `:ReferencerToggle` | Toggle reference display on/off         |
 | `:ReferencerUpdate` | Force refresh reference information in current buffer  |
-
----
-
-## Notes
-
-- ⚡ The plugin is **asynchronous**, so it won’t block your UI while fetching references.
-- ✅ Compatible with most major LSPs (gopls, tsserver, etc.).
-- ⚠ Only the first attached LSP client is used for requests.
-

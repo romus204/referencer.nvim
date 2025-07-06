@@ -21,11 +21,18 @@ local function append_virtual_text(bufnr, line, text_to_add)
     })
 end
 
-function M.show_all()
+function M.show_all(client)
     M.enable = true
     local bufnr = vim.api.nvim_get_current_buf()
-    local client = vim.lsp.get_active_clients({ bufnr = bufnr })[1]
     if not client then return end
+
+    local servers = config.options.lsp_servers
+
+    if servers and not vim.tbl_isempty(servers) then
+        if not vim.tbl_contains(servers, client.name) then
+            return
+        end
+    end
 
     vim.lsp.buf_request(bufnr, "textDocument/documentSymbol", {
         textDocument = vim.lsp.util.make_text_document_params(),
@@ -78,14 +85,23 @@ function M.toggle()
     if M.enable then
         M.delete_all()
     else
-        M.show_all()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+        for _, v in ipairs(clients) do
+            M.show_all(v)
+        end
     end
 end
 
 function M.update()
     if M.enable then
         M.delete_all()
-        M.show_all()
+
+        local bufnr = vim.api.nvim_get_current_buf()
+        local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+        for _, v in ipairs(clients) do
+            M.show_all(v)
+        end
     end
 end
 
