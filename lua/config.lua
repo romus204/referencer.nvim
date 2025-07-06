@@ -9,6 +9,7 @@ M.options = {
     color = nil,
     virt_text_pos = "eol",
     pattern = nil,
+    lsp_servers = {}
 }
 
 local hl_group_from_color = nil
@@ -24,8 +25,9 @@ function M.setup(user_opts)
     if M.options.enable then
         vim.api.nvim_create_autocmd("LspAttach", {
             pattern = M.options.pattern,
-            callback = function()
-                require("referencer").show_all()
+            callback = function(ev)
+                local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                require("referencer").show_all(client)
             end,
         })
     end
