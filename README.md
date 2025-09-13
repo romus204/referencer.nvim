@@ -9,8 +9,6 @@ This is especially useful for quickly understanding code usage without manually 
 
 https://github.com/user-attachments/assets/1b6351c8-407b-4ed4-846e-dc6cef817219
 
-
-
 ---
 
 ## Features
@@ -29,7 +27,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-    "your-username/referencer.nvim",
+    "romus204/referencer.nvim",
     config = function()
         require("referencer").setup()
     end
@@ -40,7 +38,7 @@ With [packer.nvim](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 use {
-    "your-username/referencer.nvim",
+    "romus204/referencer.nvim",
     config = function()
         require("referencer").setup()
     end
@@ -70,14 +68,14 @@ require("referencer").setup({
 
 ```lua
 require("referencer").setup({
-    enable = true, 
-    format = "  %d ref", 
-    show_no_reference = true, 
-    kinds = { 12, 6, 5, 23, 8 }, 
-    hl_group = "Comment", 
-    color = "#FFA500", 
+    enable = true,
+    format = "  %d ref",
+    show_no_reference = true,
+    kinds = { 12, 6, 5, 23, 8 },
+    hl_group = "Comment",
+    color = "#FFA500",
     virt_text_pos = "eol",
-    pattern = {"*.go", "*.py"}, 
+    pattern = {"*.go", "*.py"},
     lsp_servers = {'gopls', 'pyright'}
 
 })
