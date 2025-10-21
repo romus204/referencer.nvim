@@ -26,6 +26,11 @@ function M.show_all(client)
     local bufnr = vim.api.nvim_get_current_buf()
     if not client then return end
 
+    -- skip unsupported clients
+    if not client.supports_method("textDocument/documentSymbol") then
+        return
+    end
+
     local servers = config.options.lsp_servers
 
     if servers and not vim.tbl_isempty(servers) then
