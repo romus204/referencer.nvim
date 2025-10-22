@@ -27,7 +27,7 @@ function M.show_all(client)
     if not client then return end
 
     -- skip unsupported clients
-    if not client.supports_method("textDocument/documentSymbol") then
+    if not client:supports_method("textDocument/documentSymbol") then
         return
     end
 
