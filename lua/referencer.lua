@@ -103,7 +103,7 @@ function M.update()
         M.delete_all()
 
         local bufnr = vim.api.nvim_get_current_buf()
-        local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
         for _, v in ipairs(clients) do
             M.show_all(v)
         end
